@@ -28,7 +28,7 @@ end
 % Reshaping Bw vector
 Bw = repelem(Bw,5);
 
-% Deleting components such that fs > fmax
+% Deleting components k such that fs(k) > fmax
 fmax = 3e8;
 comps_to_delete = [];
 for k = 1:n_sim
@@ -50,6 +50,7 @@ io = 10.^(-4+2*rand(1,n_sim));
 Vn = 10.^(-11+4*rand(1,n_sim));
 
 %% Prepare Simulation Parameters Inputs
+% from P.Diaz April 19, 2023
 SDMmodel = 'SecondOrderSingleBitSC';
 load_system(SDMmodel);
 variables_filePath = '2ndSCSDM_GP.mat';
@@ -57,7 +58,7 @@ variables_filePath = '2ndSCSDM_GP.mat';
 SDin(1:n_sim) = Simulink.SimulationInput(SDMmodel);
 for n = 1:n_sim  
     ts=1./fs; 
-    SDin(n) = SDin(n).setVariable('OSR', OSR(n));
+    SDin(n) = SDin(n).setVariable('M', OSR(n));
     SDin(n) = SDin(n).setVariable('Adc', Adc(n));
     SDin(n) = SDin(n).setVariable('gm', gm(n));
     SDin(n) = SDin(n).setVariable('io', io(n));
@@ -87,4 +88,4 @@ c5 = reshape(arrayfun(@(obj) obj.Variables(5).Value, SDin),[],1);
 snr = reshape(arrayfun(@(obj) obj.SNRArray, SDout),[],1);
 data = [snr,c1,c2,c3,c4,c5];
 data = array2table(data,'VariableNames',{'SNR', 'OSR', 'Adc', 'gm', 'Io', 'Vn'});
-writetable(data,'2ndSCSDM_DataSet.csv')
+writetable(data,'2ndSCSDM_DataSet_prueba.csv')
