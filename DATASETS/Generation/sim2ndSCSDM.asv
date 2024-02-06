@@ -67,7 +67,7 @@ for n = 1:n_sim
     SDin(n) = SDin(n).setVariable('Vn', Vn(n));
     SDin(n) = SDin(n).setVariable('ts', ts(n));
     SDin(n) = SDin(n).setVariable('fs', fs(n));
-    SDin(n) = SDin(n).setVariable('Bw', Bw(n));
+    SDin(n) = SDin(n).setVariable('Bw')
 end            
     
 
@@ -81,16 +81,14 @@ SDout=parsim(SDin,'ShowProgress','on','TransferBaseWorkspaceVariables','off',...
 disp(cputime - tStart2)
 
 %%
-osr_dt = reshape(arrayfun(@(obj) obj.Variables(1).Value, SDin),[],1);
-adc_dt = reshape(arrayfun(@(obj) obj.Variables(2).Value, SDin),[],1);
-gm_dt = reshape(arrayfun(@(obj) obj.Variables(3).Value, SDin),[],1);
-io_dt = reshape(arrayfun(@(obj) obj.Variables(4).Value, SDin),[],1);
-vn_dt = reshape(arrayfun(@(obj) obj.Variables(5).Value, SDin),[],1);
-fs_dt = reshape(arrayfun(@(obj) obj.Variables(7).Value, SDin),[],1);
+c1 = reshape(arrayfun(@(obj) obj.Variables(1).Value, SDin),[],1);
+c2 = reshape(arrayfun(@(obj) obj.Variables(2).Value, SDin),[],1);
+c3 = reshape(arrayfun(@(obj) obj.Variables(3).Value, SDin),[],1);
+c4 = reshape(arrayfun(@(obj) obj.Variables(4).Value, SDin),[],1);
+c5 = reshape(arrayfun(@(obj) obj.Variables(5).Value, SDin),[],1);
+
+
 snr = reshape(arrayfun(@(obj) obj.SNRArray, SDout),[],1);
-
-
-
 data = [snr,c1,c2,c3,c4,c5];
 data = array2table(data,'VariableNames',{'SNR', 'OSR', 'Adc', 'gm', 'Io', 'Vn'});
 writetable(data,'2ndSCSDM_DataSet_prueba.csv')

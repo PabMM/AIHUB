@@ -1,0 +1,41 @@
+Configuración inicial:
+
+git config --global user.name "TuNombre": Configura tu nombre de usuario.
+git config --global user.email "tu@email.com": Configura tu dirección de correo electrónico.
+
+Clonar un repositorio:
+
+git clone URL_del_repositorio: Clona un repositorio existente en tu máquina local.
+
+Crear un nuevo repositorio:
+
+git init: Inicializa un nuevo repositorio Git en tu directorio local.
+
+Agregar y confirmar cambios:
+
+git add <nombre_del_archivo>: Agrega un archivo al área de preparación.
+git add .: Agrega todos los archivos modificados al área de preparación.
+git commit -m "Mensaje del commit": Confirma los cambios en el repositorio local.
+
+Sincronización con el repositorio remoto:
+
+git push origin <nombre_de_la_rama>: Sube los cambios al repositorio remoto.
+git pull origin <nombre_de_la_rama>: Descarga cambios desde el repositorio remoto.
+
+Branches (ramas):
+
+git branch: Lista todas las ramas locales.
+git branch <nombre_de_la_rama>: Crea una nueva rama.
+git checkout <nombre_de_la_rama>: Cambia a la rama especificada.
+git merge <nombre_de_la_rama>: Fusiona una rama con la rama actual.
+
+Ver cambios y estado:
+
+git status: Muestra el estado de los cambios.
+git log: Muestra el historial de commits.
+
+Otros comandos útiles:
+
+git remote -v: Muestra la URL del repositorio remoto.
+git rm <nombre_del_archivo>: Elimina un archivo del repositorio y del sistema de archivos.
+git reset --hard HEAD: Deshace todos los cambios locales.
