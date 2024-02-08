@@ -33,4 +33,4 @@ cs4a=cu; cs4b=cs3a; ci4=cs4a;    %% INTEG 4: gain 2, 1, 1
 vhigh=Vr; vlow=-Vr;
 
 
-save('211CascadeSDM.mat');
+save('211CascadeSDM_GP.mat');
