@@ -37,7 +37,7 @@ for i = 1:n_Bw
 end
 
 % Reshaping Bw vector
-Bw = repelem(Bw,r);
+Bw = repelem(Bw,5);
 %%
 % Deleting components k such that fs(k) > fmax
 fmax = 3e8;
