@@ -15,17 +15,28 @@ logmax = log10(Bwmax);
 Bw = 10.^(logmin + (logmax - logmin)*rand(1,n_Bw));
 
 % Values of fs and OSR
-fs = [];
-OSR = [];
+OSR_range = [4 8 16 32 64];
+r = length(OSR_range);
+n = r*n_Bw;
+fs = zeros(1,n);
+OSR = zeros(1,n);
 for i = 1:n_Bw
-    for k = [4 8 16 32 64]
-        fs = [fs, 2*k*Bw(i)];
-        OSR = [OSR, k];
+    for k = 1:r
+        fs(r*(i-1)+k) = 2*OSR_range(k)*Bw(i);
+        OSR(r*(i-1)+k) = OSR_range(k);
     end
 end
+% fs = [];
+% OSR = [];
+% for i = 1:n_Bw
+%     for k = [4 8 16 32 64]
+%         fs = [fs, 2*k*Bw(i)];
+%         OSR = [OSR, k];
+%     end
+% end
 
 % Reshaping Bw vector
-Bw = repelem(Bw,5);
+Bw = repelem(Bw,r);
 %%
 % Deleting components k such that fs(k) > fmax
 fmax = 3e8;
