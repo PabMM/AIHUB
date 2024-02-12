@@ -9,25 +9,36 @@ tStart = cputime;
 % Random values of Bw between 10kHz and 20MHz
 Bwmin=1e4;
 Bwmax=2e7;
-n_Bw = 10;
+n_Bw = 30;
 logmin = log10(Bwmin);
 logmax = log10(Bwmax);
 Bw = 10.^(logmin + (logmax - logmin)*rand(1,n_Bw));
 
-n_sim = 6*n_Bw;
 
 % Values of fs and OSR
-fs = [];
-OSR = [];
+OSR_range = [32 64 128 256 512];
+r = length(OSR_range);
+n = r*n_Bw;
+fs = zeros(1,n);
+OSR = zeros(1,n);
 for i = 1:n_Bw
-    for k = [4 8 16 32 64 128]
-        fs = [fs, 2*k*Bw(i)];
-        OSR = [OSR, k];
+    for k = 1:r
+        fs(r*(i-1)+k) = 2*OSR_range(k)*Bw(i);
+        OSR(r*(i-1)+k) = OSR_range(k);
     end
 end
+% fs = [];
+% OSR = [];
+% for i = 1:n_Bw
+%     for k = [4 8 16 32 64 128]
+%         fs = [fs, 2*k*Bw(i)];
+%         OSR = [OSR, k];
+%     end
+% end
+
 
 % Reshaping Bw vector
-Bw = repelem(Bw,6);
+Bw = repelem(Bw,r);
 
 % Deleting components k such that fs(k) > fmax
 fmax = 3e8;
@@ -130,4 +141,4 @@ snr = snr(valid_idx);
 data = [snr,bw,power,osr,adc1,gm1,io1,adc2,gm2,io2,fs];
 
 data = array2table(data,'VariableNames',{'SNR', 'Bw', 'Power', 'OSR', 'Adc1', 'gm1', 'Io1','Adc2', 'gm2', 'Io2','fs'});
-writetable(data,'3or21CascadeSDM_DataSet_prueba.csv','write')
+writetable(data,'3or21CascadeSDM_DataSet2.csv','WriteMode','append')

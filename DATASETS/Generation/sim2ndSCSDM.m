@@ -8,7 +8,7 @@ close all;
 % Random values of Bw between 10kHz and 20MHz
 Bwmin=1e4;
 Bwmax=2e7;
-n_Bw = 3e4;
+n_Bw = 20;
 logmin = log10(Bwmin);
 logmax = log10(Bwmax);
 Bw = 10.^(logmin + (logmax - logmin)*rand(1,n_Bw));
