@@ -8,7 +8,7 @@ close all;
 % Random values of Bw between 10kHz and 20MHz
 Bwmin=1e4;
 Bwmax=2e7;
-n_Bw = 30;
+n_Bw = 3e4;
 logmin = log10(Bwmin);
 logmax = log10(Bwmax);
 Bw = 10.^(logmin + (logmax - logmin)*rand(1,n_Bw));
@@ -108,18 +108,6 @@ alfa = 0.05;
 power = 2*io_dt*(1 + alfa*(2^B - 1));
 snr = reshape(arrayfun(@(obj) obj.SNRArray, SDout,'UniformOutput',false),[],1);
 
-% 
-% error = 63368;
-% snr(error) = [];
-% power(error) = [];
-% bw_dt(error) = [];
-% fs_dt(error) = [];
-% vn_dt(error) = [];
-% io_dt(error) = [];
-% gm_dt(error) = [];
-% adc_dt(error) = [];
-% osr_dt(error) = [];
-
 snr_array = cell2mat(snr);
 
 % Filtering simulations such that SNR > 50
@@ -136,13 +124,5 @@ snr_array = snr_array(valid_idx);
 
 data = [snr_array,bw_dt,power,osr_dt,fs_dt,adc_dt,gm_dt,io_dt,vn_dt];
 data = array2table(data,'VariableNames',{'SNR', 'Bw', 'Power', 'OSR', 'fs', 'Adc','gm','Io','Vn'});
-writetable(data,'2ndSCmultibitSDM_DataSet_prueba.csv','WriteMode','append')
+writetable(data,'2ndSCmultibitSDM_DataSet.csv','WriteMode','append')
 
-% Dataset1 considera OSR hasta 256
-% Dataset2 considera OSR hasta 512
-
-
-% %%
-% save('variables_2orSCSDM.mat')
-% %%
-% save('SDout_2orSCSDM.mat','SDout','-v7.3')
