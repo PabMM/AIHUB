@@ -8,10 +8,8 @@ tStart1 = cputime;
 
 %% Preparing Simulation Parameters Input
 
-% Random values of Bw between 10kHz and 20MHz
-Bwmin=1e4;
-Bwmax=2e7;
-n_Bw = 5;
-logmin = log10(Bwmin);
-logmax = log10(Bwmax);
-Bw = logspace(logmin,logmax,n_Bw);
+n_Bw = 3; n_fs = 2; n_gm = 2; n_GBW = 2; n_IIP3 = 2;
+
+% Values for Bw between 10Mhz and 200Mhz
+bw = Bw_fs_range(true,10,0);
+for 
