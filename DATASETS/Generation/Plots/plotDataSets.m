@@ -115,8 +115,9 @@ close all;
 
 
 % 211 Cascade V2
-table4or2 = readtable("211CascadeSDM_DataSet2prueba2.csv");
+table4or2 = readtable("211CascadeSDM_DataSet5.csv");
 data42 = table2array(table4or2(2:end, :));
+
 
 figure;
 scatter3(data42(:,1), data42(:,2), data42(:,3), 10, 'filled');

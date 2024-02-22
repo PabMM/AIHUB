@@ -17,7 +17,7 @@ else
     fs = zeros(1,fs_steps*lbw);
     i = 1;
     for bw = Bw
-        fs_min = 4*bw;
+        fs_min = 8*bw;
         fs_max = min(512*2*bw,300e6);
         fs(i:(i+fs_steps-1)) = logspace(log10(fs_min),log10(fs_max),fs_steps);
         i = i+fs_steps;

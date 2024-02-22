@@ -9,7 +9,7 @@ tStart = cputime;
 % Values for Bw between 10Mhz and 20Mhz; and for fs between 4Bw and
 % min(512*2*Bw,300MHz)
 addpath('..');
-bw_fs = Bw_fs_range(false,200,12);
+bw_fs = Bw_fs_range(false,15,5);
 Bw = bw_fs{1,1};
 fs = bw_fs{1,2};
 
@@ -19,35 +19,38 @@ N_osr = log2(osr);
 osr_pot2 = 2.^(round(N_osr)); % recalcular fs
 
 % Recalculating fs
-fs2 = 2.*Bw.*osr_pot2;
+%fs2 = 2.*Bw.*osr_pot2;
  
 % Filtering OSR
 valid_osr_idx = find(osr_pot2 <= 64);
 OSR = osr_pot2(valid_osr_idx);
 
 % Reshaping Bw and fs:
-Bw = Bw(valid_osr_idx); % eliminar repetidos (bw,fs,osr)
-fs3 = fs2(valid_osr_idx);
+% Bw = Bw(valid_osr_idx); % eliminar repetidos (bw,fs,osr)
+% fs3 = fs2(valid_osr_idx);
+% 
+% % Eliminating repeated values
+% triple = [Bw; OSR; fs3];
+% triplet = triple.';
+% tripleu = unique(triplet,'rows');
+% 
+% Bw = tripleu(:,1);
+% OSR = tripleu(:,2);
+% fs = tripleu(:,3);
 
-% Eliminating repeated values
-triple = [Bw; OSR; fs3];
-triplet = triple.';
-tripleu = unique(triplet,'rows');
-
-Bw = tripleu(:,1);
-OSR = tripleu(:,2);
-fs = tripleu(:,3);
+Bw = Bw(valid_osr_idx);
+fs = fs(valid_osr_idx);
 
 
 n_sim = length(fs);
 %%
 
 % Rest of parameters
-Adc = 10.^(2+1*rand(1,n_sim)); % Minimo 100
-gm = 10.^(-4+2*rand(1,n_sim)); % minimo 10**-4
+Adc = 10.^(1+2*rand(1,n_sim)); % Minimo 100
+gm = 10.^(-5+2*rand(1,n_sim)); % minimo 10**-4
 io = 10.^(-4+2*rand(1,n_sim));
 
-fin = Bw./3;
+%fin = Bw./3;
 
 %% Prepare Simulation Parameters Inputs
 SDMmodel = 'umts211_real_PM';
@@ -85,7 +88,7 @@ for n = 1:n_sim
     SDin(n) = SDin(n).setVariable('Io4', max(f(3)*auz,1e-4));
 
     SDin(n) = SDin(n).setVariable('Bw', Bw(n));
-    SDin(n) = SDin(n).setVariable('fin',fin(n));
+%    SDin(n) = SDin(n).setVariable('fin',fin(n));
 
     fprintf(['Simulation input creation ',num2str(n/n_sim*100),'\n'])
 end
@@ -151,6 +154,6 @@ snr_v = snr;
 data = [snr_v,bw,power,osr,fs_d,adc1,gm1,io1,adc2,gm2,io2,adc3,gm3,io3,adc4,gm4,io4];
 
 data = array2table(data,'VariableNames',{'SNR', 'Bw','Power','OSR','fs','Adc1', 'gm1', 'Io1','Adc2', 'gm2', 'Io2','Adc3', 'gm3', 'Io3','Adc4', 'gm4', 'Io4'});
-writetable(data,'211CascadeSDM_DataSet5.csv','WriteMode','overwrite')
+writetable(data,'211CascadeSDM_DataSet5prueba3.csv','WriteMode','overwrite')
 
 disp(cputime - tStart)
