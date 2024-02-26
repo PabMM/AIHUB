@@ -9,7 +9,7 @@ tStart = cputime;
 % Values for Bw between 10Mhz and 20Mhz; and for fs between 4Bw and
 % min(512*2*Bw,300MHz)
 addpath('..');
-bw_fs = Bw_fs_range(false,5000,12);
+bw_fs = Bw_fs_range(false,10,5);
 Bw = bw_fs{1,1};
 fs = bw_fs{1,2};
 
@@ -43,18 +43,12 @@ n_sim = length(fs);
 % Rest of parameters
 fi = Bw./2;
 Adc1 = 10.^(2+rand(1,n_sim));
-gm1 = 10.^(-4+2*rand(1,n_sim));
+gm1 = 10.^(-5+2*rand(1,n_sim));
 io1 = 10.^(-4+2*rand(1,n_sim));
 
-f = rand*0.8+0.2;
-
-% Adc2 = 10.^(1+2*rand(1,n_sim));
-% gm2 = 10.^(-5+2*rand(1,n_sim));
-% io2 = 10.^(-4+2*rand(1,n_sim));
-
-Adc2 = max(f*Adc1,100);
-gm2 = max(f*gm1,1e-4);
-io2 = max(f*io1,1e-4);
+Adc2 = 10.^(1+2*rand(1,n_sim));
+gm2 = 10.^(-5+2*rand(1,n_sim));
+io2 = 10.^(-4+2*rand(1,n_sim));
 
 %% Simulations
 SDMmodel = 'ThirdOrderCascadeSingleBitSC_PMM';
@@ -79,7 +73,7 @@ for n = 1:n_sim
     SDin(n) = SDin(n).setVariable('io2', io2(n));
 
     SDin(n) = SDin(n).setVariable('Bw', Bw(n));
-    SDin(n) = SDin(n).setVariable('fi',fi(n));
+    SDin(N) = SDin(n).setVariable('fi',fi(n));
 
 
     fprintf(['Simulation input creation ',num2str(n/n_sim*100),'\n'])
@@ -131,4 +125,4 @@ snr = snr(valid_idx);
 data = [snr,bw,power,osr,adc1,gm1,io1,adc2,gm2,io2,fs];
 
 data = array2table(data,'VariableNames',{'SNR', 'Bw', 'Power', 'OSR', 'Adc1', 'gm1', 'Io1','Adc2', 'gm2', 'Io2','fs'});
-writetable(data,'3or21CascadeSDM_DataSet_longrun1.csv','WriteMode','overwrite')
+writetable(data,'3or21CascadeSDM_DataSet_run0.csv','WriteMode','append')

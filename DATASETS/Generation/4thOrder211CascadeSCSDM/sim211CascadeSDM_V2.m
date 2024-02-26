@@ -9,7 +9,7 @@ tStart = cputime;
 % Values for Bw between 10Mhz and 20Mhz; and for fs between 4Bw and
 % min(512*2*Bw,300MHz)
 addpath('..');
-bw_fs = Bw_fs_range(false,200,12);
+bw_fs = Bw_fs_range(false,5000,12);
 Bw = bw_fs{1,1};
 fs = bw_fs{1,2};
 
@@ -127,30 +127,30 @@ pq = alfa*(1+1+(2^B - 1))*io_avg;
 power = io1 + io2 + io3 + io4 + pq;
 
 % Filtering simulations such that SNR > 50
-% valid_idx = find(snr > 50);
-% snr_v = snr(valid_idx);
-% bw = bw(valid_idx);
-% power = power(valid_idx);
-% osr = osr(valid_idx);
-% fs_d = fs_d(valid_idx);
-% adc1 = adc1(valid_idx);
-% gm1 = gm1(valid_idx);
-% io1 = io1(valid_idx);
-% adc2 = adc2(valid_idx);
-% gm2 = gm2(valid_idx);
-% io2 = io2(valid_idx);
-% adc3 = adc3(valid_idx);
-% gm3 = gm3(valid_idx);
-% io3 = io3(valid_idx);
-% adc4 = adc4(valid_idx);
-% gm4 = gm4(valid_idx);
-% io4 = io4(valid_idx);
+valid_idx = find(snr > 50);
+snr_v = snr(valid_idx);
+bw = bw(valid_idx);
+power = power(valid_idx);
+osr = osr(valid_idx);
+fs_d = fs_d(valid_idx);
+adc1 = adc1(valid_idx);
+gm1 = gm1(valid_idx);
+io1 = io1(valid_idx);
+adc2 = adc2(valid_idx);
+gm2 = gm2(valid_idx);
+io2 = io2(valid_idx);
+adc3 = adc3(valid_idx);
+gm3 = gm3(valid_idx);
+io3 = io3(valid_idx);
+adc4 = adc4(valid_idx);
+gm4 = gm4(valid_idx);
+io4 = io4(valid_idx);
 
-snr_v = snr;
+
 
 data = [snr_v,bw,power,osr,fs_d,adc1,gm1,io1,adc2,gm2,io2,adc3,gm3,io3,adc4,gm4,io4];
 
 data = array2table(data,'VariableNames',{'SNR', 'Bw','Power','OSR','fs','Adc1', 'gm1', 'Io1','Adc2', 'gm2', 'Io2','Adc3', 'gm3', 'Io3','Adc4', 'gm4', 'Io4'});
-writetable(data,'211CascadeSDM_DataSet5.csv','WriteMode','overwrite')
+writetable(data,'211CascadeSDM_DataSet_longrun1.csv','WriteMode','overwrite')
 
 disp(cputime - tStart)

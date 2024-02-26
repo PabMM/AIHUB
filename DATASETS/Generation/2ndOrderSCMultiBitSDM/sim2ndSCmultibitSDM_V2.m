@@ -8,21 +8,34 @@ close all;
 % Values for Bw between 10Mhz and 20Mhz; and for fs between 4Bw and
 % min(512*2*Bw,300MHz)
 addpath('..');
-bw_fs = Bw_fs_range(false,10,6);
+bw_fs = Bw_fs_range(false,5000,12);
 Bw = bw_fs{1,1};
 fs = bw_fs{1,2};
 
-% Calculating and filtering OSR:
+% Calculating OSR:
 osr = round(fs./(2*Bw));
 N_osr = log2(osr);
 osr_pot2 = 2.^(round(N_osr));
  
+% Recalculating fs
+fs2 = 2.*Bw.*osr_pot2;
+
+%Filtering OSR
 valid_osr_idx = find(osr_pot2 >= 32);
 OSR = osr_pot2(valid_osr_idx);
 
 % Reshaping Bw and fs:
 Bw = Bw(valid_osr_idx);
-fs = fs(valid_osr_idx);
+fs3 = fs2(valid_osr_idx);
+
+% Eliminating repeated values
+triple = [Bw; OSR; fs3];
+triplet = triple.';
+tripleu = unique(triplet,'rows');
+
+Bw = tripleu(:,1);
+OSR = tripleu(:,2);
+fs = tripleu(:,3);
 
 n_sim = length(fs);
 
@@ -95,4 +108,4 @@ snr_array = snr_array(valid_idx);
 
 data = [snr_array,bw_dt,power,osr_dt,fs_dt,adc_dt,gm_dt,io_dt,vn_dt];
 data = array2table(data,'VariableNames',{'SNR', 'Bw', 'Power', 'OSR', 'fs', 'Adc','gm','Io','Vn'});
-writetable(data,'2ndSCmultibitSDM_DataSet2.csv','WriteMode','append')
+writetable(data,'2ndSCmultibitSDM_DataSet_longrun1.csv','WriteMode','append')

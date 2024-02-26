@@ -1,0 +1,15 @@
+% Simulation runs for SC models
+% P. Manrique Feb 22, 2024
+
+clear;
+
+addpath(genpath(pwd));
+
+addpath('/home/pmanrique/Documentos/delsig')
+addpath('/home/pmanrique/Documentos/SDTOOLBOX_2_MALCOVATI')
+addpath('/home/pmanrique/Documentos/SIMSIDES')
+
+%%
+% IMPORTANT: CHECK SAME ARGUMENTS FOR Bw_fs_range FUNCTION
+sim211CascadeSDM_V2;
+sim3or21CascadeSCSDM_V2;
