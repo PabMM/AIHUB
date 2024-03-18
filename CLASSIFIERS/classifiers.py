@@ -21,7 +21,7 @@ from Lib.Lib import save_model
 import timeit
 
 #%% datareading and normalizatino
-csv_file=os.path.join(MYPATH,"DATASETS/FinalDataSets/dataset_total.csv")
+csv_file=os.path.join(MYPATH,"DATASETS/FinalDataSets/dataset_total_V2.csv")
 dataframe = pd.read_csv(csv_file)
 
 def print_hash():
